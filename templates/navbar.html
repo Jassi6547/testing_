@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('home') }}">Patent Matching</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+    </div>
+    <form method="POST" action="{{url_for('info')}}" class="container-fluid">
+      <div class="d-flex">
+        {{ form.hidden_tag() }}
+        <input id="id1" name="id1" type="text" class="form-control me-2" placeholder="Enter Id1" aria-label="id1" aria-describedby="basic-addon1" width="50px">
+        <input id="id2" name="id2" type="text" class="form-control me-2" placeholder="Enter Id2" aria-label="id2" aria-describedby="basic-addon1" width="50px">
+        <button class="btn btn-outline-success" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</nav>

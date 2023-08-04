@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            text-align: right;
+            margin-bottom: 20px;
+            padding: 0px;
+            margin-left: 20px;
+        }
+        .form-container h3{
+            text-align: left;
+            padding: 5px;
+<!--            margin-left: 20px;-->
+        }
+
+        .form-container label {
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container input[type="submit"] {
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            height: 250px;
+        }
+
+        .info-section {
+            flex-basis: 50%;
+            background-color: #fff;
+            padding: 20px;
+            padding-top: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h5 {
+            color: #333;
+            margin-top: 0;
+        }
+        .dropdown-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+
+        }
+        select {
+            height: 80%;
+            font-size: 16px;
+            width: 100%;
+        }
+        .info-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .comparison-container {
+            display: flex;
+            text-align: left;
+            padding-top: 20px;
+            justify-content: space-between;
+            font-size: 20px;
+            height: 250px;
+
+        }
+        .comparison-section {
+            flex-basis: 100%;
+            background-color: #fff;
+            max-height: 96%;
+            padding: 20px;
+            padding-top: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .comparison-section h5 {
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+            padding-top: 10px;
+        }
+        .comparison-section iframe {
+            width: 100%;
+            padding: 0px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+        .green-span {
+            color: green;
+        }
+        .red-span {
+            color: red;
+        }
+         #comparison-textbox {
+            width: 100%;
+            height: 120px;
+            font-size: 16px;
+        }
+    </style>
+    <title>Patent Matching</title>
+
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true)%}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+      {%endwith%}
+      {% block content%}
+      {% endblock %}
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

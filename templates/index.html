@@ -1,0 +1,250 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+<!--    <title>Patent Matching</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            background-color: #f4f4f4;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            color: #333;-->
+<!--        }-->
+
+<!--        .form-container {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        .form-container label {-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .form-container input[type="text"] {-->
+<!--            width: 200px;-->
+<!--            padding: 5px;-->
+<!--            border-radius: 5px;-->
+<!--            border: 1px solid #ccc;-->
+<!--        }-->
+
+<!--        .form-container input[type="submit"] {-->
+<!--            padding: 5px 15px;-->
+<!--            border-radius: 5px;-->
+<!--            border: none;-->
+<!--            background-color: #333;-->
+<!--            color: #fff;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .info-container {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--        }-->
+
+<!--        .info-section {-->
+<!--            flex-basis: 48%;-->
+<!--            background-color: #fff;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+
+<!--        .info-section h5 {-->
+<!--            color: #333;-->
+<!--            margin-top: 0;-->
+<!--        }-->
+<!--        .dropdown-container {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            height: 100vh;-->
+<!--        }-->
+<!--        select {-->
+<!--            height: 80%;-->
+<!--            font-size: 16px;-->
+<!--            width: 100%;-->
+<!--        }-->
+<!--        .info-section textarea {-->
+<!--            width: 100%;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 5px;-->
+<!--            resize: none;-->
+<!--        }-->
+<!--        .comparison-container {-->
+<!--            display: flex;-->
+<!--            text-align: center;-->
+<!--            justify-content: space-between;-->
+<!--        }-->
+<!--        .comparison-section {-->
+<!--            flex-basis: 100%;-->
+<!--            max-height: 96%;-->
+<!--            padding: 20px;-->
+<!--            padding-top: 0px;-->
+<!--            padding-left: 2px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .comparison-section h5 {-->
+<!--            color: #333;-->
+<!--            font-weight: bold;-->
+<!--            text-align: left;-->
+<!--        }-->
+<!--        .comparison-section iframe {-->
+<!--            width: 100%;-->
+<!--            padding: 0px;-->
+<!--            padding-left: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 5px;-->
+<!--            resize: none;-->
+<!--        }-->
+<!--        .highlight {-->
+<!--            background-color: yellow;-->
+<!--        }-->
+<!--        .green-span {-->
+<!--            color: green;-->
+<!--        }-->
+<!--        .red-span {-->
+<!--            color: red;-->
+<!--        }-->
+<!--         #comparison-textbox {-->
+<!--            width: 100%;-->
+<!--            height: 70%;-->
+<!--            text-align: left;-->
+<!--            font-size: 12px;-->
+<!--        }-->
+<!--        #comparison-textbox {-->
+<!--            width: 100%;-->
+<!--            height: 70%;-->
+<!--            text-align: left;-->
+<!--            font-size: 12px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% with messages = get_flashed_messages(with_categories=true)%}-->
+<!--        {% if messages %}-->
+<!--            {% for category, message in messages %}-->
+<!--                <div class="alert alert-{{category}}" role="alert">-->
+<!--                    {{ message }}-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        {% endif %}-->
+<!--    {%endwith%}-->
+<!--    <h1>Patent Matching</h1>-->
+{% extends 'base.html' %}
+{% block content %}
+<!--    <div class="form-container">-->
+<!--&lt;!&ndash;        <h3><b> Patent Matching</b></h3>&ndash;&gt;-->
+<!--        <form action="/info" method="POST">-->
+<!--            <label for="id1">Enter ID 1:</label>-->
+<!--            <input type="text" id="id1" name="id1" value="{{ request.form.id1 }}">-->
+<!--            <label for="id2">Enter ID 2:</label>-->
+<!--            <input type="text" id="id2" name="id2" value="{{ request.form.id2 }}">-->
+<!--            <input type="submit" value="Submit">-->
+<!--            <br/><br/>-->
+<!--        </form>-->
+<!--    </div>-->
+    <div class="info-container">
+        <div class="info-section">
+            <h6><b>Select any {{id1}}'s Claim:</b></h6>
+            <select id="item-list1" size="3">
+            {% if id1 %}
+                {% for item in info1 %}
+                    <option value="{{ item.name }}">{{item.id}}. {{ item.name }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+        <div class="info-section">
+            <h6><b>Select any {{id2}}'s Claim:</b></h6>
+            <select id="item-list2" size="5">
+            {% if id2 %}
+                {% for item in info2 %}
+                    <option value ="{{ item.name }}">{{item.id}}. {{ item.name }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+    </div>
+
+    <div class="comparison-container">
+        <div class="comparison-section">
+            <h6><b> Matching Claims </b></h6>
+            <select id="claim-match_list" size="5">
+            {% if result %}
+                {% for item in result %}
+                    <option value ="{{ item }}">{{item}}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+<!--            <textarea id="comparison-textbox" name="comparison-textbox" readonly>-->
+<!--                {% if result %}-->
+<!--                    {% for item in result %}-->
+<!--                        {{ item }} {% endfor %}-->
+<!--                {% endif %}-->
+<!--            </textarea>-->
+        </div>
+        <div class="comparison-section">
+            <h6><b> Compare Result </b></h6>
+<!--            <textarea id="comparison-textbox" readonly></textarea>-->
+            <iframe id="comparison" name="comparison" sandbox="allow-scripts" srcdoc=""></iframe>
+        </div>
+    </div>
+    <script>
+            const itemList1 = document.getElementById('item-list1');
+            const itemList2 = document.getElementById('item-list2');
+<!--            const comparisonTextbox = document.getElementById('comparison-textbox');-->
+            var iframeDocument = document.getElementById("comparison");
+            function updateComparison() {
+            const selectedValue1 = itemList1.value;
+            const selectedValue2 = itemList2.value;
+
+            // Make an AJAX POST request to the Flask API
+            const xhr = new XMLHttpRequest();
+            const url = '/api/compare';
+            const params = `item1_id=${selectedValue1}&item2_id=${selectedValue2}`;
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    const comparisonResult = response.result;
+<!--                    comparisonTextbox.value = comparisonResult;-->
+<!--                    iframeDocument.open();-->
+<!--                    iframeDocument.write(comparisonResult);-->
+<!--                    iframeDocument.close();-->
+<!--                    iframeDocument.srcdoc = comparisonResult-->
+                    iframeDocument.srcdoc = `
+                        <style>
+                            s {
+                                text-decoration: line-through;
+                                background-color: red; /* Set the background color for strikethrough words */
+                            }
+                            b {
+                                text-decoration: bold;
+                                background-color: green;
+                            }
+                        </style>${comparisonResult}`;
+                }
+            };
+
+            xhr.send(params);
+        }
+        itemList1.addEventListener('change', updateComparison);
+        itemList2.addEventListener('change', updateComparison);
+
+        // Update comparison on initial load
+        updateComparison();
+    </script>
+{% endblock%}
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+<!--</body>-->
+<!--</html>-->
