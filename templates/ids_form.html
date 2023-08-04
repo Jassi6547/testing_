@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if id1 and id2 %}
+    <h1> id1 = {{id1}}</h1>
+    <h1> id2 = {{id2}}</h1>
+{% else %}
+    <br/>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.id1.label }}
+        {{ form.id1() }}
+        {{ form.id2.label }}
+        {{ form.id2() }}
+        <br/>
+        {{ form.submit()}}
+    </form>
+{% endif %}
+{% endblock %}

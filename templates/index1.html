@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="form-container">
+        <form action="/info" method="POST">
+            <label for="id1">Enter ID 1:</label>
+            <input type="text" id="id1" name="id1" value="{{ request.form.id1 }}">
+            <br><br>
+            <label for="id2">Enter ID 2:</label>
+            <input type="text" id="id2" name="id2" value="{{ request.form.id2 }}">
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="info-container">
+        <div class="info-section">
+            <h5>Select any {{id1}}'s Claim:</h5>
+            <select id="item-list1" size="5">
+            {% if id1 %}
+                {% for item in info1 %}
+                    <option value="{{ item.name }}">{{item.id}}. {{ item.name }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+        <div class="info-section">
+            <h5>Select any {{id2}}'s Claim:</h5>
+            <select id="item-list2" size="5">
+            {% if id2 %}
+                {% for item in info2 %}
+                    <option value ="{{ item.name }}">{{item.id}}. {{ item.name }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+    </div>
+
+    <div class="comparison-container">
+        <div class="comparison-section">
+            <h5> Compare Result </h5>
+<!--            <textarea id="comparison-textbox" readonly></textarea>-->
+            <iframe id="comparison" name="comparison" sandbox="allow-scripts" srcdoc=""></iframe>
+        </div>
+    </div>
+    <script>
+            const itemList1 = document.getElementById('item-list1');
+            const itemList2 = document.getElementById('item-list2');
+<!--            const comparisonTextbox = document.getElementById('comparison-textbox');-->
+            var iframeDocument = document.getElementById("comparison");
+            function updateComparison() {
+            const selectedValue1 = itemList1.value;
+            const selectedValue2 = itemList2.value;
+
+            // Make an AJAX POST request to the Flask API
+            const xhr = new XMLHttpRequest();
+            const url = '/api/compare';
+            const params = `item1_id=${selectedValue1}&item2_id=${selectedValue2}`;
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    const comparisonResult = response.result;
+<!--                    comparisonTextbox.value = comparisonResult;-->
+<!--                    iframeDocument.open();-->
+<!--                    iframeDocument.write(comparisonResult);-->
+<!--                    iframeDocument.close();-->
+<!--                    iframeDocument.srcdoc = comparisonResult-->
+                    iframeDocument.srcdoc = `
+                        <style>
+                            s {
+                                text-decoration: line-through;
+                                background-color: red; /* Set the background color for strikethrough words */
+                            }
+                            b {
+                                text-decoration: bold;
+                                background-color: green;
+                            }
+                        </style>${comparisonResult}`;
+                }
+            };
+
+            xhr.send(params);
+        }
+        itemList1.addEventListener('change', updateComparison);
+        itemList2.addEventListener('change', updateComparison);
+
+        // Update comparison on initial load
+        updateComparison();
+    </script>
+
+{% endblock %}
